@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>protocol-communication-manager</artifactId>
+        <groupId>com.bofa</groupId>
+        <version>1.0.2</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>protocol-communication-parent</artifactId>
+    <packaging>pom</packaging>
+
+    <name>protocol :: communication :: parent</name>
+    <inceptionYear>2020</inceptionYear>
+
+    <properties>
+        <rule.version>3.4.0</rule.version>
+        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
+    </properties>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>bofa1ex</name>
+            <email>bofa1exx@gmail.com</email>
+        </developer>
+    </developers>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- protocol-codec-commons -->
+            <dependency>
+                <groupId>com.bofa</groupId>
+                <artifactId>protocol-codec-commons</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- protocol-codec-mqtt -->
+            <dependency>
+                <groupId>com.bofa</groupId>
+                <artifactId>protocol-codec-mqtt</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- protocol-codec-flv -->
+            <dependency>
+                <groupId>com.bofa</groupId>
+                <artifactId>protocol-codec-flv</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 规则引擎 -->
+            <dependency>
+                <groupId>org.jeasy</groupId>
+                <artifactId>easy-rules-mvel</artifactId>
+                <version>${rule.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

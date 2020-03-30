@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans profile="mqtt"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="frameDecoder" class="com.bofa.protocol.communication.mqtt.handler.MqttFrameDecoder" scope="prototype"/>
+
+    <bean id="businessHandler" class="com.bofa.protocol.communication.mqtt.handler.MqttBusinessHandler"/>
+
+    <!--   rules   -->
+    <bean id="mqttConnectRule" class="com.bofa.protocol.communication.mqtt.service.rules.MqttConnectRule"/>
+
+</beans>

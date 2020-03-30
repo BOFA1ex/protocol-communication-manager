@@ -1,0 +1,8 @@
+server:
+    port: 24028
+    timeout: 20
+    timeunit: SECONDS
+buffer:
+    minimum: 64
+    initial: 2048
+    maximum: 65536

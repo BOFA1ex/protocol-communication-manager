@@ -1,0 +1,18 @@
+name: "mqtt rule"
+description: "mqtt 报文规则"
+compositeRuleType: "ConditionalRuleGroupEx"
+composingRules:
+  - name: "mqtt packet 入口"
+    condition: "model.data ~= '.*MQTT.*$"
+    actions:
+      - "System.out.println(\"hello world\");"
+  - name: "connect"
+    priority: 100
+    condition: "model.data ~= '01020304$'"
+    actions:
+      - "model.getBean(\"mqttConnectCommand\").decode(model.buffer, model.channel)"
+  - name: "connect ack"
+    condition: "model.data ~= '01020305$'"
+    priority: 100
+    actions:
+        - "model.getBean(\"mqttConnectCommand\").decode(model.buffer, model.channel)"
