@@ -6,8 +6,6 @@
 
     <bean id="frameDecoder" class="com.bofa.protocol.communication.mqtt.handler.MqttFrameDecoder" scope="prototype"/>
 
-    <bean id="businessHandler" class="com.bofa.protocol.communication.mqtt.handler.MqttBusinessHandler"/>
-
     <!--   rules   -->
     <bean id="mqttConnectRule" class="com.bofa.protocol.communication.mqtt.service.rules.MqttConnectRule"/>
 
