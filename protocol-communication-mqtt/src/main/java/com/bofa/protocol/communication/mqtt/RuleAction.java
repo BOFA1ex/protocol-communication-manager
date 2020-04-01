@@ -9,6 +9,8 @@ import org.jeasy.rules.api.*;
 import org.jeasy.rules.core.DefaultRulesEngine;
 import org.springframework.core.io.ClassPathResource;
 
+import java.util.concurrent.CompletableFuture;
+
 
 /**
  * @author bofa1ex
@@ -21,7 +23,7 @@ public class RuleAction {
         final Rules rules = new MVELRuleFactoryEx().scanDirectoryRules(classPathResource.getFile());
         final Facts entries = new Facts();
         final ByteBuf buffer = Unpooled.wrappedBuffer(new byte[]{0x01, 0x02, 0x03, 0x04});
-        entries.put("model", RulePacket.builder().data(ByteBufUtils.buffer2HexNonRead(buffer)).build());
+        entries.put("model", RulePacket.builder().data(CompletableFuture.supplyAsync(() -> ByteBufUtils.buffer2HexNonRead(buffer))).build());
         RulesEngine rulesEngine = new DefaultRulesEngine();
         rulesEngine.fire(rules, entries);
     }
