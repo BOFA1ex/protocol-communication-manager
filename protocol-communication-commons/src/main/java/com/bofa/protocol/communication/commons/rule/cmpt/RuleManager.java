@@ -25,13 +25,11 @@ public class RuleManager implements RuleConstants {
         rules.register(rule);
     }
 
-    @Async("asyncBusinessExecutor")
     public void fireRules(Object value){
         facts.put(DEFAULT_FACTS_NAME, value);
         rulesEngine.fire(rules, facts);
     }
 
-    @Async("asyncBusinessExecutor")
     public Map<Rule, Boolean> checkRules(Facts facts){
         return rulesEngine.check(rules, facts);
     }
