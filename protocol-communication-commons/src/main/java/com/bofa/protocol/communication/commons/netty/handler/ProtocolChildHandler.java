@@ -32,25 +32,9 @@ public abstract class ProtocolChildHandler extends ChannelInitializer<SocketChan
     @Lookup(value = "frameDecoder")
     abstract ByteToMessageDecoder frameDecoder();
 
-    /**
-     * 处理异步业务
-     */
-    @Autowired
-    private SimpleChannelInboundHandler<?> businessHandler;
 
     protected void initChannel(SocketChannel channel) {
         channel.pipeline().addLast(new IdleStateHandler(timeout, 0,0, TimeUnit.valueOf(timeunit)))
-                .addLast(frameDecoder())
-                .addLast(businessHandler);
-    }
-
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        logger.info("##################### 通道已连接！");
-    }
-
-    @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        logger.warn("##################### 通道已断开！");
+                .addLast(frameDecoder());
     }
 }
