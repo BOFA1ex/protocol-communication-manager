@@ -2,10 +2,7 @@ package com.bofa.protocol.communication.commons.netty.handler;
 
 import io.netty.channel.*;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -16,9 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2020/3/29
  */
 @Component
-public abstract class ProtocolChildHandler extends ChannelInitializer<SocketChannel>  {
-
-    static final Logger logger = LoggerFactory.getLogger(ProtocolChildHandler.class);
+public abstract class ProtocolChildHandler extends ChannelInitializer<SocketChannel> {
 
     @Value("${timeout}")
     private Integer timeout;
@@ -29,12 +24,12 @@ public abstract class ProtocolChildHandler extends ChannelInitializer<SocketChan
     /**
      * 处理粘包/拆包
      */
-    @Lookup(value = "frameDecoder")
-    abstract ByteToMessageDecoder frameDecoder();
+    @Lookup("frameDecoder")
+    abstract ChannelInboundHandlerAdapter frameDecoder();
 
 
     protected void initChannel(SocketChannel channel) {
-        channel.pipeline().addLast(new IdleStateHandler(timeout, 0,0, TimeUnit.valueOf(timeunit)))
+        channel.pipeline().addLast(new IdleStateHandler(timeout, 0, 0, TimeUnit.valueOf(timeunit)))
                 .addLast(frameDecoder());
     }
 }
