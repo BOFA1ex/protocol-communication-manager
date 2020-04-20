@@ -5,8 +5,6 @@ import io.netty.channel.Channel;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.concurrent.Future;
-
 /**
  * @author bofa1ex
  * @since 2020/3/28
@@ -14,8 +12,11 @@ import java.util.concurrent.Future;
 @Data
 @Builder
 public class RulePacket {
-    private ByteBuf buffer;
+    private ByteBuf srcBuffer;
+    private ByteBuf dstBuffer;
     private Channel channel;
-    private Future<Object> data;
-    private Runnable callback;
+    /* 标识符, 用于DB下发指令识别 */
+    private String identifier;
+    /* original data */
+    private Object data;
 }
