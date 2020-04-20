@@ -49,12 +49,15 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%red([%d{yyyy-MM-dd HH:mm:ss}]) %boldGreen([%thread]) %highlight(%-5level) %boldRed(%logger{36}) - %black(%msg%n)</pattern>
+            <pattern>%red([%d{yyyy-MM-dd HH:mm:ss}]) %boldGreen([%thread]) %highlight(%-5level) %boldRed(%logger{36}) %n %black(%msg%n)</pattern>
         </encoder>
     </appender>
 
     <logger name="io.netty" level="off" additivity="false"/>
     <logger name="org.springframework" level="off" additivity="false"/>
+
+    <!--    建议在debug阶段, 检测规则是否触发, 或者是当前已注册的规则等等, 在生产环境, 建议关闭日志打印.-->
+    <logger name="org.jeasy" level="off" additivity="false"/>
 
     <root level="DEBUG">
         <appender-ref ref="STDOUT"/>

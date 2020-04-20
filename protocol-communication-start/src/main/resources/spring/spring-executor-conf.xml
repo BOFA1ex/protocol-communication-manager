@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <bean id="asyncBusinessExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+    <bean id="businessExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <property name="corePoolSize" value="4"/>
         <property name="maxPoolSize" value="32"/>
         <property name="queueCapacity" value="512"/>
         <property name="keepAliveSeconds" value="20"/>
-        <property name="threadNamePrefix" value="async-business-"/>
+        <property name="threadNamePrefix" value="business-"/>
         <property name="waitForTasksToCompleteOnShutdown" value="true"/>
         <property name="awaitTerminationSeconds" value="20"/>
         <property name="rejectedExecutionHandler">
             <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
         </property>
     </bean>
+
+    <bean id="businessScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+        <property name="poolSize" value="4"/>
+        <property name="threadNamePrefix" value="business-scheduler-"/>
+        <property name="waitForTasksToCompleteOnShutdown" value="true"/>
+        <property name="awaitTerminationSeconds" value="20"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
+        </property>
+    </bean>
+
+    <task:annotation-driven executor="businessExecutor" scheduler="businessScheduler"/>
 </beans>

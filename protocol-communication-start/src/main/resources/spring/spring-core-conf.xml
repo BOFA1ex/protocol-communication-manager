@@ -10,7 +10,6 @@
     <context:annotation-config/>
     <context:component-scan base-package="com.bofa"/>
     <context:property-placeholder location="classpath:server/server-conf.yml"/>
-    <task:annotation-driven />
 
     <!-- 设置全局bean对象懒加载, 考虑到convertMethod不需要一次性全部提前预加载, 当然如果空间允许, 可以提前预加载, 提高解析效率 -->
     <beans default-lazy-init="false" />

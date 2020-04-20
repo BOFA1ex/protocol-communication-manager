@@ -3,7 +3,7 @@ package com.bofa.protocol.communication;
 import com.bofa.protocol.communication.commons.netty.ProtocolServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 

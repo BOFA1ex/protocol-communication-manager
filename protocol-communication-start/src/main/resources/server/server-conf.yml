@@ -1,6 +1,6 @@
 server:
     port: 24028
-    timeout: 20
+    timeout: 60
     timeunit: SECONDS
 buffer:
     minimum: 64
