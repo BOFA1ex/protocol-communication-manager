@@ -6,7 +6,18 @@
 
     <bean id="frameDecoder" class="com.bofa.protocol.communication.mqtt.handler.MqttFrameDecoder" scope="prototype"/>
 
+    <!--   管理会话缓存容器 -->
+    <bean id="clientSessionManager" class="com.bofa.protocol.communication.mqtt.store.ClientSessionManager"/>
+
     <!--   rules   -->
     <bean id="mqttConnectRule" class="com.bofa.protocol.communication.mqtt.service.rules.MqttConnectRule"/>
+    <bean id="mqttDisConnectRule" class="com.bofa.protocol.communication.mqtt.service.rules.MqttDisConnectRule"/>
+    <bean id="mqttSubscribeRule" class="com.bofa.protocol.communication.mqtt.service.rules.MqttSubscribeRule"/>
+    <bean id="mqttUnSubscribeRule" class="com.bofa.protocol.communication.mqtt.service.rules.MqttUnSubscribeRule"/>
+    <bean id="mqttPingReqRule" class="com.bofa.protocol.communication.mqtt.service.rules.MqttPingReqRule"/>
+    <bean id="mqttPublishAckRule" class="com.bofa.protocol.communication.mqtt.service.rules.MqttPublishRule"/>
+    <bean id="mqttPublishRule" class="com.bofa.protocol.communication.mqtt.service.rules.MqttPublishAckRule"/>
 
+    <!-- task -->
+    <bean class="com.bofa.protocol.communication.mqtt.task.ReSendPublishTask"/>
 </beans>
