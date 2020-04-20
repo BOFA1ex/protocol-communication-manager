@@ -13,10 +13,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * @author bofa1ex
- * @since 2020/3/30
+ * @since 2020/4/1
  */
-@Rule(name = "mqttConnectRule", description = "mqtt connect 报文匹配规则")
-public class MqttConnectRule extends AbstractRule {
+@Rule(name = "mqttPingReqRule", description = "mqtt ping 报文匹配规则")
+public class MqttPingReqRule extends AbstractRule {
 
     @Autowired
     private MqttParser mqttParser;
@@ -28,14 +28,14 @@ public class MqttConnectRule extends AbstractRule {
     public boolean condition(@Fact(DEFAULT_FACTS_NAME) RulePacket packet) {
         return Optional.ofNullable(packet.getSrcBuffer()).map(buffer -> {
             final int packetType = buffer.getUnsignedByte(0) >> 4;
-            return packetType == MqttPacketTypeEnum.CONNECT.packetType;
+            return packetType == MqttPacketTypeEnum.PINGREQ.packetType;
         }).orElse(Boolean.FALSE);
     }
 
     @Action
     public void action(@Fact(DEFAULT_FACTS_NAME) RulePacket packet) {
-        packet.setData(mqttParser.decodeMqttConnectPacket(packet.getSrcBuffer(), packet.getChannel()));
-        CompletableFuture.runAsync(() -> mqttDBService.authc(packet), executor)
+        packet.setData(mqttParser.decodeMqttPingReqPacket(packet.getSrcBuffer(), packet.getChannel()));
+        CompletableFuture.runAsync(() -> mqttDBService.pong(packet), executor)
                 .exceptionally(processError())
                 .thenAccept(writeAndFlush(packet));
     }

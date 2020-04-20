@@ -7,7 +7,6 @@ import com.bofa.protocol.communication.commons.rule.model.RulePacket;
 import com.bofa.protocol.communication.mqtt.service.MqttDBService;
 import org.jeasy.rules.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -15,8 +14,8 @@ import java.util.concurrent.CompletableFuture;
  * @author bofa1ex
  * @since 2020/3/30
  */
-@Rule(name = "mqttConnectRule", description = "mqtt connect 报文匹配规则")
-public class MqttConnectRule extends AbstractRule {
+@Rule(name = "mqttPublishAckRule", description = "mqtt publish ack 报文匹配规则")
+public class MqttPublishAckRule extends AbstractRule {
 
     @Autowired
     private MqttParser mqttParser;
@@ -28,14 +27,14 @@ public class MqttConnectRule extends AbstractRule {
     public boolean condition(@Fact(DEFAULT_FACTS_NAME) RulePacket packet) {
         return Optional.ofNullable(packet.getSrcBuffer()).map(buffer -> {
             final int packetType = buffer.getUnsignedByte(0) >> 4;
-            return packetType == MqttPacketTypeEnum.CONNECT.packetType;
+            return packetType == MqttPacketTypeEnum.PUBACK.packetType;
         }).orElse(Boolean.FALSE);
     }
 
     @Action
     public void action(@Fact(DEFAULT_FACTS_NAME) RulePacket packet) {
-        packet.setData(mqttParser.decodeMqttConnectPacket(packet.getSrcBuffer(), packet.getChannel()));
-        CompletableFuture.runAsync(() -> mqttDBService.authc(packet), executor)
+        packet.setData(mqttParser.decodeMqttPublishAckPacket(packet.getSrcBuffer(), packet.getChannel()));
+        CompletableFuture.runAsync(() -> mqttDBService.publishAck(packet), executor)
                 .exceptionally(processError())
                 .thenAccept(writeAndFlush(packet));
     }
